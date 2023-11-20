@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 
 function sendMail() {
     try {
-        $encryptionType     = getenv('SMTP_SECURE') !== false ? getenv('SMTP_SECURE') : 'SMTPS';;
+        $encryptionType     = getenv('SMTP_SECURE') ?: 'SMTPS';
         $encryptionSettings = [
             'SMTPS' => ['method' => PHPMailer::ENCRYPTION_SMTPS, 'port' => '465'],
             'STARTTLS' => ['method' => PHPMailer::ENCRYPTION_STARTTLS, 'port' => '587'],
@@ -24,22 +24,14 @@ function sendMail() {
         $mail->SMTPSecure = $encryptionSettings[$encryptionType]['method'];
         $mail->Port       = $encryptionSettings[$encryptionType]['port'];
 
-        if ($encryptionType === 'SMTPS') {
-             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-             $mail->Port       = '465';
-        } else {
-             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-             $mail->Port       = '587';
-        };
-
         $mail->setFrom($mail->Username, getenv('SMTP_FROM'));
         $mail->addAddress(getenv('SMTP_ADDRESS_MAIL'), getenv('SMTP_ADDRESS_NAME'));
 
-        $mail->Subject = getenv('SMTP_SUBJECT') !== false ? getenv('SMTP_SUBJECT') : $_POST['subject'];
-        $mail->CharSet = getenv('SMTP_CHARSET') !== false ? getenv('SMTP_CHARSET') : 'UTF-8';
+        $mail->Subject = getenv('SMTP_SUBJECT') ?: $_POST['subject'];
+        $mail->CharSet = getenv('SMTP_CHARSET') ?: 'UTF-8';
 
         $contactData = '';
-        $skipKeys = ['frc-captcha-solution'];
+        $skipKeys = explode(',', getenv('SKIP_KEYS') ?: '');
         foreach ($_POST as $key => $value) {
             if (in_array($key, $skipKeys)) {
                 continue;

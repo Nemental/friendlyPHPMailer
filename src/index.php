@@ -17,24 +17,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $skipCsrf = filter_var(getenv('SKIP_CSRF'), FILTER_VALIDATE_BOOLEAN);
     $skipCaptcha = filter_var(getenv('SKIP_CAPTCHA'), FILTER_VALIDATE_BOOLEAN);
 
-    $validateCsrfToken = false;
-    $verifyCaptcha = false;
+    $validateCsrf = false;
+    $validateCaptcha = false;
 
     if (!$skipCsrf) {
-        require __DIR__ . '/includes/validateCsrfToken.php';
-        $validateCsrfToken = validateCsrfToken();
+        require __DIR__ . '/includes/validateCsrf.php';
+        $validateCsrf = validateCsrf();
 
-        if (!$validateCsrfToken['success']) {
-            handleResponse($validateCsrfToken);
+        if (!$validateCsrf['success']) {
+            handleResponse($validateCsrf);
         }
     }
 
     if (!$skipCaptcha) {
-        require __DIR__ . '/includes/verifyCaptcha.php';
-        $verifyCaptcha = verifyCaptcha();
+        require __DIR__ . '/includes/validateCaptcha.php';
+        $validateCaptcha = validateCaptcha();
 
-        if (!$verificationResult['success']) {
-            handleResponse($verifyCaptcha);
+        if (!$validateCaptcha['success']) {
+            handleResponse($validateCaptcha);
         }
     }
 

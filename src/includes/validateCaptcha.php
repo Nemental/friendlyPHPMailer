@@ -1,45 +1,41 @@
 <?php
 
-function verifyCaptcha() {
-    $url = getenv('FRC_URL') ?? 'https://api.friendlycaptcha.com/api/v1/siteverify';
-    $solution = $_POST['frc-captcha-solution'];
-    $apiSecret = getenv('FRC_API_SECRET');
+function validateCaptcha() {
+    $url = getenv('FRC_URL') ?: 'https://api.friendlycaptcha.com/api/v1/siteverify';
+    $solutionKey = getenv('FRC_SOLUTION_KEY') ?: 'frc-captcha-solution';
+    $apiSecret = getenv('FRC_API_SECRET') ?: '';
 
-    $data = array(
+    $solution = $_POST[$solutionKey] ?? '';
+
+    $data = [
         'solution' => $solution,
-        'secret' => $apiSecret
-    );
+        'secret' => $apiSecret,
+    ];
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => http_build_query($data),
+        CURLOPT_RETURNTRANSFER => true,
+    ]);
 
     try {
         $result = curl_exec($ch);
 
         if ($result === false) {
-            throw new Exception('Fehler bei der Captcha-Überprüfung: ' . curl_error($ch));
+            throw new Exception('Failed to validate captcha: ' . curl_error($ch));
         }
 
         $response = json_decode($result, true);
 
-        if (isset($response['success']) && $response['success'] === true) {
-            return array(
-                'success' => true,
-            );
+        if (!empty($response['success']) && $response['success'] === true) {
+            return ['success' => true];
         } else {
-            return array(
-                'success' => false,
-                'message' => 'Captcha-Überprüfung fehlgeschlagen'
-            );
+            throw new Exception('Failed to validate captcha: ' . implode(', ', $response['errors']));
         }
     } catch (Exception $e) {
-        return array(
-            'success' => false,
-            'message' => 'Fehler bei der Captcha-Überprüfung: ' . $e->getMessage()
-        );
+        return ['success' => false, 'message' => $e->getMessage()];
     } finally {
         curl_close($ch);
     }

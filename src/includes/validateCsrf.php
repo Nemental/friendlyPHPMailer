@@ -1,6 +1,6 @@
 <?php
 
-function validateCsrfToken() {
+function validateCsrf() {
     if (
         isset($_POST['csrf_token']) &&
         hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])

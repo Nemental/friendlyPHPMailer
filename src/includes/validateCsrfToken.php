@@ -5,8 +5,13 @@ function validateCsrfToken() {
         isset($_POST['csrf_token']) &&
         hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
     ) {
-        return true;
+        return array(
+            'success' => true
+        );
     } else {
-        return false;
+        return array(
+            'success' => false,
+            'message' => 'Invalid CSRF token!'
+        );
     }
 }

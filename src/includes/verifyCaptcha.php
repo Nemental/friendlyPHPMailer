@@ -1,7 +1,9 @@
 <?php
 
-function verifyCaptcha($solution, $apiSecret) {
-    $url = $_ENV['FRC_URL'] ?? 'https://api.friendlycaptcha.com/api/v1/siteverify';
+function verifyCaptcha() {
+    $url = getenv('FRC_URL') ?? 'https://api.friendlycaptcha.com/api/v1/siteverify';
+    $solution = $_POST['frc-captcha-solution'];
+    $apiSecret = getenv('FRC_API_SECRET');
 
     $data = array(
         'solution' => $solution,
@@ -26,7 +28,6 @@ function verifyCaptcha($solution, $apiSecret) {
         if (isset($response['success']) && $response['success'] === true) {
             return array(
                 'success' => true,
-                'message' => 'Captcha erfolgreich verifiziert'
             );
         } else {
             return array(

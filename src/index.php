@@ -10,28 +10,40 @@ use PHPMailer\PHPMailer\Exception;
 
 $response = ['success' => false, 'message' => ''];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $skipCsrf = filter_var(getenv('CSRF_SKIP'), FILTER_VALIDATE_BOOLEAN);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $response['message'] = 'Invalid request method!';
+    handleResponse($response);
+} else {
+    $skipCsrf = filter_var(getenv('SKIP_CSRF'), FILTER_VALIDATE_BOOLEAN);
+    $skipCaptcha = filter_var(getenv('SKIP_CAPTCHA'), FILTER_VALIDATE_BOOLEAN);
+
     $validateCsrfToken = false;
+    $verifyCaptcha = false;
 
     if (!$skipCsrf) {
         require __DIR__ . '/includes/validateCsrfToken.php';
         $validateCsrfToken = validateCsrfToken();
+
+        if (!$validateCsrfToken['success']) {
+            handleResponse($validateCsrfToken);
+        }
     }
 
-    if ($validateCsrfToken || $skipCsrf) {
+    if (!$skipCaptcha) {
         require __DIR__ . '/includes/verifyCaptcha.php';
-        require __DIR__ . '/includes/processForm.php';
+        $verifyCaptcha = verifyCaptcha();
 
-        processForm();
-    } else {
-        $response['success'] = false;
-        $response['message'] = 'Invalid CSRF token!';
+        if (!$verificationResult['success']) {
+            handleResponse($verifyCaptcha);
+        }
     }
-} else {
-    $response['success'] = false;
-    $response['message'] = 'Invalid request method!';
+
+    require __DIR__ . '/includes/sendMail.php';
+    handleResponse(sendMail());
 }
 
-header('Content-Type: application/json');
-echo json_encode($response);
+function handleResponse($response) {
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
+}

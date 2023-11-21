@@ -4,6 +4,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/html
 
-RUN composer require phpmailer/phpmailer
+RUN composer require phpmailer/phpmailer "^6.8.1"
 
 COPY --chown=www-data:www-data ./src /var/www/html

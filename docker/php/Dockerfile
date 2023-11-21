@@ -4,7 +4,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/html
 
-RUN composer require vlucas/phpdotenv
 RUN composer require phpmailer/phpmailer
 
 COPY --chown=www-data:www-data ./src /var/www/html

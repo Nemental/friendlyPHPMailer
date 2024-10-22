@@ -1,0 +1,20 @@
+{
+  "name": "friendlyphpmailer",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nemental/friendlyPHPMailer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nemental/friendlyPHPMailer/issues"
+  },
+  "homepage": "https://github.com/Nemental/friendlyPHPMailer#readme",
+  "devDependencies": {
+    "semantic-release": "^21.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^8.0.0",
+    "@semantic-release/commit-analyzer": "^9.0.0",
+    "@semantic-release/release-notes-generator": "^10.0.0"
+  }
+}

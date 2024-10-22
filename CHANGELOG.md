@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.0...v1.0.1) (2024-10-22)
+
+
+### Bug Fixes
+
+* release workflow trigger on tag creation ([7489059](https://github.com/Nemental/friendlyPHPMailer/commit/7489059a0083b9ffa5c7b2d389af907131607c14))
+
 # 1.0.0 (2024-10-22)
 
 

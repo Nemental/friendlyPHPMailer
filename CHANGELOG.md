@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.1...v1.0.2) (2024-10-23)
+
+
+### Bug Fixes
+
+* release workflow with semantic exec version pass ([bd8f9e7](https://github.com/Nemental/friendlyPHPMailer/commit/bd8f9e72500cf64adf85ac042f6e2c0920cc10c3))
+
 ## [1.0.1](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.0...v1.0.1) (2024-10-22)
 
 

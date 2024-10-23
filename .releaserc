@@ -5,8 +5,9 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    ["@semantic-release/git", {
-      "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+    "@semantic-release/git",
+    ["@semantic-release/exec", {
+      "verifyReleaseCmd": "echo \"version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
     }]
   ]
 }

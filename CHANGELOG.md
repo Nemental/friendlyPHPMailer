@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.3...v1.0.4) (2024-10-23)
+
+
+### Bug Fixes
+
+* outsource release and build workflow ([5e421ec](https://github.com/Nemental/friendlyPHPMailer/commit/5e421ec7920fee8933facc8d586f6506c9650a32))
+
 ## [1.0.3](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.2...v1.0.3) (2024-10-23)
 
 

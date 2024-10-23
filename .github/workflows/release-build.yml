@@ -1,0 +1,15 @@
+---
+name: Release & Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  semantic:
+    uses: nemental/.github/.github/workflows/release.yml@main
+
+  docker:
+    uses: nemental/.github/.github/workflows/build.yml@main
+    needs: semantic
+    with:
+      version: ${{ needs.semantic.outputs.version }}

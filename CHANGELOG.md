@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.2...v1.0.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* output ref variable for docker build ([483b216](https://github.com/Nemental/friendlyPHPMailer/commit/483b2165e9ed77610deb2b5f7a8bdbb911c81e03))
+
 ## [1.0.2](https://github.com/Nemental/friendlyPHPMailer/compare/v1.0.1...v1.0.2) (2024-10-23)
 
 

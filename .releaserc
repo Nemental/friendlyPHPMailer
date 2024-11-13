@@ -8,7 +8,7 @@
     "@semantic-release/github",
     "@semantic-release/git",
     ["@semantic-release/exec", {
-      "verifyReleaseCmd": "echo \"version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
+      "successCmd": "echo \"version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
     }]
   ]
 }

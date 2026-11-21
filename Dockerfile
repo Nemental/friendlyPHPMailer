@@ -1,4 +1,4 @@
-FROM php:8.5-fpm-alpine
+FROM php:8.6-fpm-alpine
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
